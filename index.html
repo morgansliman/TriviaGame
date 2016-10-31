@@ -30,9 +30,29 @@
 				</div>
 
 				<div class="row vertical-align main-game">
-					<button class="button-start center-block hid btn btn-default btn-lg">
+					<button class="button-start center-block btn btn-default btn-lg">
 						Start
-					</button>
+					</button> <!-- initially visible, hidden on click -->
+
+					<!-- game mode buttons, shown on start button click -->
+					<div class="btn-toolbar hid center-block mode-list">
+						<div class="btn-group-vertical btn-group-justified">
+							<div class="btn-group">
+								<button type="button" class="btn button-mode btn-success">HTML</button>
+							</div>
+							<div class="btn-group">
+								<button type="button" class="btn button-mode btn-warning">Javascript</button>
+							</div>
+						</div>
+						<div class="btn-group-vertical btn-group-justified">
+							<div class="btn-group">
+								<button type="button" class="btn button-mode btn-primary">CSS</button>
+							</div>
+							<div class="btn-group">
+								<button type="button" class="btn button-mode btn-danger">JQuery</button>
+							</div>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>

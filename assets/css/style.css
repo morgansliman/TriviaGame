@@ -46,10 +46,15 @@ html, body {
 	align-items: center;
 }
 
+.hid {
+	display: none;
+}
+
 .button-start {
 	width: 50%;
 }
 
 .button-mode {
-	
+	padding: 50px;
+	font-size: 48px;
 }
