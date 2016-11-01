@@ -58,3 +58,26 @@ html, body {
 	padding: 50px;
 	font-size: 48px;
 }
+
+.game-wrapper {
+	line-height: 200%;
+	font-size: 24px;
+	width: 100%;
+	text-align: center;
+}
+
+ul {
+	font-size: 26px;
+	font-weight: bold;
+	width: 50%;
+}
+
+li {
+	text-align: center;
+}
+
+li:hover {
+	background-color: black;
+	color: white;
+	cursor: pointer;
+}
