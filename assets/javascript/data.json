@@ -1,6 +1,6 @@
 var jsonData = {
 		"html": {
-			"question": [
+			"questions": [
 				"What is the correct way to add an external Javascript file to your HTML page?",
 				"What does HTML stand for?",
 				"What should the first line of your HTML file always be?",
@@ -8,7 +8,7 @@ var jsonData = {
 				"Which of these links will open in a new tab?"
 			],
 
-			"answer": [
+			"answers": [
 				[
 					"<script src='relative/path/to/javascript/file.js'>",
 					"<link rel='javascript' href='relative/path/to/javascript/file.js'>",
@@ -48,31 +48,31 @@ var jsonData = {
 		},
 
 		"css": {
-			"question": [
+			"questions": [
 
 			],
 
-			"answer": [
+			"answers": [
 
 			]
 		},
 
 		"javascript": {
-			"question": [
+			"questions": [
 
 			],
 
-			"answer": [
+			"answers": [
 
 			]
 		},
 
 		"jquery": {
-			"question": [
+			"questions": [
 
 			],
 
-			"answer": [
+			"answers": [
 
 			]
 		}
