@@ -11,8 +11,25 @@ $(document).ready(function() {
 
 	var game = {
 		timer: 10,
+		numCorrect: 0,
+		numWrong: 0,
+		numTimeout: 0,
+		answerIndex: '',
 
 		startGame: function(mode) {
+			this.answerIndex = this.newQuestion(mode);
+			this.startCountdown();
+
+			$('.question').on('click', function() {
+				if ($(this).data('index') == game.answerIndex) {
+					game.numCorrect += 1;
+				} else {
+					game.numWrong += 1;
+				}
+			});
+		},
+
+		newQuestion: function(mode) {
 			var div = $('<div>', {
 				'class': 'center-block game-wrapper',
 				'data-mode': mode.toLowerCase()
@@ -21,15 +38,20 @@ $(document).ready(function() {
 			game.timer + ' Seconds</span></p>' + 
 			'<p class="question-text">' + jsonData[mode.toLowerCase()].question[0] + '</p><br>' +
 			'<ul class="question-list center-block">' +
-			'<li class="question">' + jsonData[mode.toLowerCase()].answer[0][0] + '</li>' +
-			'<li class="question">' + jsonData[mode.toLowerCase()].answer[0][1] + '</li>' +
-			'<li class="question">' + jsonData[mode.toLowerCase()].answer[0][2] + '</li>' +
-			'<li class="question">' + jsonData[mode.toLowerCase()].answer[0][3] + '</li>' +
+			'<li class="question" data-index="0"></li>' +
+			'<li class="question" data-index="1"></li>' +
+			'<li class="question" data-index="2"></li>' +
+			'<li class="question" data-index="3"></li>' +
 			'</ul>'
 			);
-
 			$('.main-game').append(div);
-			this.startCountdown();
+
+			var ul = $('.question-list').children();
+			for (var i = 0; i < 4; i++) {
+				ul.eq(i).text(jsonData[mode.toLowerCase()].answer[0][i]);
+			}
+
+			return jsonData[mode.toLowerCase()].answer[0][4];
 		},
 
 		startCountdown: function() {

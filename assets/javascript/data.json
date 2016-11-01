@@ -1,15 +1,48 @@
 var jsonData = {
 		"html": {
 			"question": [
-				"What is the correct way to add an external Javascript file to your HTML page?"
+				"What is the correct way to add an external Javascript file to your HTML page?",
+				"What does HTML stand for?",
+				"What should the first line of your HTML file always be?",
+				"Which of the following is NOT a self-closing HTML tag?",
+				"Which of these links will open in a new tab?"
 			],
 
 			"answer": [
 				[
-					"answer1",
-					"answer2",
-					"answer3",
-					"answer4"
+					"<script src='relative/path/to/javascript/file.js'>",
+					"<link rel='javascript' href='relative/path/to/javascript/file.js'>",
+					"<script src='relative/path/to/javascript/file.js'></script>",
+					"<link href='relative/path/to/javascript/file.js'></link>",
+					2 // Index of correct answer
+				],
+				[
+					"Honey, Tomorrow Make the Lamb",
+					"Hamsters Teach Many Lessons",
+					"Handkerchiefs Thrown to Me Lightly",
+					"Hyper-Text Markup Language",
+					3 // Index of correct answer
+				],
+				[
+					"<!DOCTYPE html>",
+					"<html>",
+					"<body>",
+					"<I have no idea what I'm doing>",
+					0 // Index of correct answer
+				],
+				[
+					"<link>",
+					"<img>",
+					"<script>",
+					"<br>",
+					2 // Index of correct answer
+				],
+				[
+					"<a href='www.google.com'>Google</a>",
+					"<a href='www.google.com' target='_blank'>Google</a>",
+					"<a href='www.google.com' target='new_tab'>Google</a>",
+					"<a href='_blank' target='www.google.com'>Google</a>",
+					1 // Index of correct answer
 				]
 			]
 		},
