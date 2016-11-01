@@ -19,12 +19,12 @@ $(document).ready(function() {
 			}).html(
 			'<p class="time-remaining-text">Time Remaining: <span id="time-remaining">' + 
 			game.timer + ' Seconds</span></p>' + 
-			'<p class="question-text">placeholder</p><br>' +
+			'<p class="question-text">' + jsonData[mode.toLowerCase()].question[0] + '</p><br>' +
 			'<ul class="question-list center-block">' +
-			'<li class="question">' + 'question 1 placeholder' + '</li>' +
-			'<li class="question">' + 'question 2 placeholder' + '</li>' +
-			'<li class="question">' + 'question 3 placeholder' + '</li>' +
-			'<li class="question">' + 'question 4 placeholder' + '</li>' +
+			'<li class="question">' + jsonData[mode.toLowerCase()].answer[0][0] + '</li>' +
+			'<li class="question">' + jsonData[mode.toLowerCase()].answer[0][1] + '</li>' +
+			'<li class="question">' + jsonData[mode.toLowerCase()].answer[0][2] + '</li>' +
+			'<li class="question">' + jsonData[mode.toLowerCase()].answer[0][3] + '</li>' +
 			'</ul>'
 			);
 
@@ -51,23 +51,5 @@ $(document).ready(function() {
 				$('#time-remaining').text(game.timer + ' Seconds');
 			}
 		}
-	}
-
-	var questions = {
-		'html': [
-
-		],
-
-		'css': [
-
-		],
-
-		'javascript': [
-
-		],
-
-		'jquery': [
-
-		]
 	}
 });
