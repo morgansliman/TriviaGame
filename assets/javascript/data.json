@@ -97,21 +97,97 @@ var jsonData = {
 
 		"javascript": {
 			"questions": [
-
+				"What is proper syntax of a 'for' loop?",
+				"Which pair of matching symbols creates an object?",
+				"Which pair of matching symbols creates an array?",
+				"Which method allows you to turn a string into an integer?",
+				"How do you start a comment in Javascript?"
 			],
 
 			"answers": [
-
+				[
+					"for (var i = 0; i < array.length; i++) {}",
+					"for (i = 0; i < array.length; i++) {}",
+					"for (var i = 0, i < array.length, i++) {}",
+					"for (i) {}",
+					0 
+				],
+				[
+					"[]",
+					"<>",
+					"()",
+					"{}",
+					3
+				],
+				[
+					"[]",
+					"<>",
+					"()",
+					"{}",
+					0
+				],
+				[
+					"toInt()",
+					"parseInt()",
+					"fromString()",
+					"forInt()",
+					1
+				],
+				[
+					"##",
+					">>",
+					"//",
+					"<!--",
+					2
+				]
 			]
 		},
 
 		"jquery": {
 			"questions": [
-
+				"Which symbol represents the JQuery object?",
+				"How would you use JQuery to select an element with a specific class?",
+				"How would you use JQuery to select an element with a specific ID?",
+				"Which JQuery method should you wrap all of your Javascript code in?",
+				"Which JQuery method would you use to request JSON data from an API?"
 			],
 
 			"answers": [
-
+				[
+					"%",
+					"&",
+					"?",
+					"$",
+					3 // Did you miss me?
+				],
+				[
+					"$('.class')",
+					"$(.class)",
+					"$('#class')",
+					"$(#class)",
+					0 // I was gone for a while there
+				],
+				[
+					"$('.id')",
+					"$(.id)",
+					"$('#id')",
+					"$(#id)",
+					2 // but I'm back now.
+				],
+				[
+					"$.ready(function() {})",
+					"$(document).ready(function() {})",
+					"$('.document').ready(function() {})",
+					"(document).ready(function() {})",
+					1 // Just in time for ...
+				],
+				[
+					"$.api()",
+					"$.ajax()",
+					"$.json()",
+					"$.helloworld()",
+					1 // the end of the file.
+				]
 			]
 		}
 	}
