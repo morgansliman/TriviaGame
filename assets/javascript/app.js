@@ -20,19 +20,23 @@ $(document).ready(function() {
 	});
 
 	$('.question').on('click', function() {
-		console.log($(this).data('index'));
-		if ($(this).data('index') == parseInt(game.jsonAnswers[game.index][4])) {
-			clearInterval(counter);
+		clearInterval(counter);
+		$('.question-list').children().each(function() {
+			$(this).removeClass('question');
+		});
 
+		if ($(this).data('index') == parseInt(game.jsonAnswers[game.index][4])) {
 			game.numCorrect += 1;
 			game.showAnswer(true);
 		} 
 		else if ($(this).data('index') != parseInt(game.jsonAnswers[game.index][4])) {
-			clearInterval(counter);
-
 			game.numWrong += 1;
 			game.showAnswer(false);
 		}
+	});
+
+	$('.restart').on('click', function() {
+		game.init();
 	});
 
 	var game = {
@@ -45,6 +49,21 @@ $(document).ready(function() {
 		questionIndex: [],	// stores the question # in the array
 		jsonQuestions: [],	// stores array of questions from data.json for selected mode
 		jsonAnswers: [],	// stores array of answers from data.json for selected mode
+
+		init: function() {
+			game.timer = 10;
+			game.numCorrect = 0;
+			game.numWrong = 0;
+			game.numTimeout = 0;
+			game.index = '';
+			game.answerIndex = '';
+			game.questionIndex = [];
+			game.jsonQuestions = [];
+			game.jsonAnswers = [];
+
+			$('.result-wrapper').hide();
+			$('.mode-list').show();
+		},
 
 		// grabs questions and answers arrays and
 		// stores them in respective object properties.
@@ -71,12 +90,6 @@ $(document).ready(function() {
 		},
 
 		showAnswer: function(result) {
-			$('.question').hover(function() {
-				$(this).css({
-					'background-color': 'none',
-					'color': 'black'
-				});
-			});
 			if (result == 'miss') {
 				$('.question-text').text('Out of Time!');
 				$('.result-text').text('The correct answer was: ');
@@ -114,12 +127,11 @@ $(document).ready(function() {
 				'background': '',
 				'color': ''
 			});
-			$('.question').hover(function() {
-				$(this).css({
-					'background-color': '',
-					'color': ''
-				});
-			});
+			$('.question-list').children().each(function() {
+				if ($(this).hasClass('question') == false) {
+					$(this).addClass('question');
+				}
+			})
 
 			// picks a random question
 			var index = Math.floor(Math.random() * game.jsonQuestions.length);
@@ -164,6 +176,9 @@ $(document).ready(function() {
 
 			if (game.timer == 0) {
 				clearInterval(counter);
+				$('.question-list').children().each(function() {
+					$(this).removeClass('question');
+				});
 
 				game.numTimeout += 1;
 				$('.time-remaining').text('Time Remaining: ' + game.timer + ' Seconds');

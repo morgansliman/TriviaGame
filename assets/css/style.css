@@ -59,7 +59,7 @@ html, body {
 	font-size: 48px;
 }
 
-.game-wrapper {
+.game-wrapper, .result-wrapper {
 	line-height: 200%;
 	font-size: 24px;
 	width: 100%;
@@ -75,7 +75,17 @@ li {
 	text-align: center;
 }
 
-li:hover {
+li.question:hover {
+	background-color: black;
+	color: white;
+	cursor: pointer;
+}
+
+.restart {
+	padding: 20px 40px;
+}
+
+.restart:hover {
 	background-color: black;
 	color: white;
 	cursor: pointer;
