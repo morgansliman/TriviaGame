@@ -37,6 +37,9 @@ html, body {
 
 .main-content {
 	background-color: rgba(255,255,255,0.95);
+	border-radius: 25px;
+	/*border: 2px solid #d5f5ff;*/
+	box-shadow: 1px 1px 2px black, 0 0 20px #d5f5ff, 0 0 5px darkblue;
 	margin: 40px auto;
 }
 
