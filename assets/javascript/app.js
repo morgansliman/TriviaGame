@@ -19,79 +19,137 @@ $(document).ready(function() {
 		game.playGame(true);
 	});
 
+	$('.question').on('click', function() {
+		console.log($(this).data('index'));
+		if ($(this).data('index') == parseInt(game.jsonAnswers[game.index][4])) {
+			clearInterval(counter);
+
+			game.numCorrect += 1;
+			game.showAnswer(true);
+		} 
+		else if ($(this).data('index') != parseInt(game.jsonAnswers[game.index][4])) {
+			clearInterval(counter);
+
+			game.numWrong += 1;
+			game.showAnswer(false);
+		}
+	});
+
 	var game = {
 		timer: 10,			
 		numCorrect: 0,		
 		numWrong: 0,
 		numTimeout: 0,
+		index: '',
 		answerIndex: '', 	// stores index of correct answer
+		questionIndex: [],	// stores the question # in the array
 		jsonQuestions: [],	// stores array of questions from data.json for selected mode
 		jsonAnswers: [],	// stores array of answers from data.json for selected mode
 
 		// grabs questions and answers arrays and
 		// stores them in respective object properties.
 		getJSON: function(mode) {
-			this.jsonQuestions = jsonData[mode].questions;
-			this.jsonAnswers = jsonData[mode].answers;
+			game.jsonQuestions = jsonData[mode].questions;
+			game.jsonAnswers = jsonData[mode].answers;
 		},
 
 		playGame: function(start=false) {
-			if (this.jsonQuestions.length == 0) {
-				this.endGame();
+			if (game.jsonQuestions.length == game.questionIndex.length) {
+				game.endGame();
 			}
 			else {
-				// display the first question and answers and 
-				// store the correct answer's index in object property.
-				this.newQuestion();
+				// display question and answers and store
+				// correct answer's index in object property.
+				game.newQuestion();
 
 				// starts the question's timer
-				this.startCountdown();
+				game.startCountdown();
 
 				// recursive recursion
-				$('.question').on('click', function() {
-					if ($(this).data('index') == game.answerIndex) {
-						clearInterval(counter);
-						game.numCorrect += 1;
-						game.showAnswer(true);
-					} else {
-						clearInterval(counter);
-						game.numWrong += 1;
-						game.showAnswer(false);
-					}
-
-					game.playGame();
-					console.log('correct: ', game.numCorrect, '\n', 'wrong: ', game.numWrong);
-				});
+				
 			}
 		},
 
-		showAnswer: function(result='') {
-			
+		showAnswer: function(result) {
+			$('.question').hover(function() {
+				$(this).css({
+					'background-color': 'none',
+					'color': 'black'
+				});
+			});
+			if (result == 'miss') {
+				$('.question-text').text('Out of Time!');
+				$('.result-text').text('The correct answer was: ');
+				$('.result-text').show();
+				$('.question-list').children().eq(game.answerIndex).css({
+					'background-color': 'green',
+					'color': 'white'
+				});
+			}
+			else if (result == false) {
+				$('.question-text').text('Nope!');
+				$('.result-text').text('The correct answer was: ');
+				$('.result-text').show();
+				$('.question-list').children().eq(game.answerIndex).css({
+					'background-color': 'green',
+					'color': 'white'
+				});
+			}
+			else if (result == true) {
+				$('.question-text').text('Correct!');
+				$('.question-list').children().eq(game.answerIndex).css({
+					'background-color': 'green',
+					'color': 'white'
+				});
+			}
+
+			game.answerIndex = '';
+			setTimeout(game.playGame, 3000);
 		},
 
 		newQuestion: function() {
 			game.timer = 10;
+			$('.result-text').hide();
+			$('.question-list').children().css({
+				'background': '',
+				'color': ''
+			});
+			$('.question').hover(function() {
+				$(this).css({
+					'background-color': '',
+					'color': ''
+				});
+			});
+
 			// picks a random question
 			var index = Math.floor(Math.random() * game.jsonQuestions.length);
-			// stores it's answer's index
-			game.answerIndex = game.jsonAnswers[index][4];
+			if (game.questionIndex.indexOf(index) == -1) {
+				// stores it's question & answer's index
+				game.index = index;
+				game.questionIndex.push(index);
+				game.answerIndex = game.jsonAnswers[index][4];
 
-			$('.game-wrapper').show();
+				$('.game-wrapper').show();
 
-			$('.time-remaining').text('Time Remaining: ' + game.timer + ' Seconds');
+				$('.time-remaining').text('Time Remaining: ' + game.timer + ' Seconds');
 
-			$('.question-text').text(game.jsonQuestions[index]);
+				$('.question-text').text(game.jsonQuestions[index]);
 
-			// loop through and add each possible answer into the respective
-			// list items we just created. 
-			var ul = $('.question-list').children();
-			for (var i = 0; i < 4; i++) {
-				ul.eq(i).text(game.jsonAnswers[index][i]);
+				// loop through and add each possible answer into the respective
+				// list items we just created. 
+				var ul = $('.question-list').children();
+				for (var i = 0; i < 4; i++) {
+					ul.eq(i).text(game.jsonAnswers[index][i]);
+				}
+
+				console.log(
+					'correct: ', game.numCorrect, '\n', 
+					'wrong: ', game.numWrong, '\n',
+					'timeout: ', game.numTimeout, '\n',
+					game.answerIndex
+				);
 			}
-
-			// removes question and answers we just used so we don't get duplicates
-			game.jsonQuestions.splice(index, 1);
-			game.jsonAnswers.splice(index, 1);
+			else {game.newQuestion();}
 		},
 
 		// starts each question's countdown
@@ -106,9 +164,10 @@ $(document).ready(function() {
 
 			if (game.timer == 0) {
 				clearInterval(counter);
+
 				game.numTimeout += 1;
 				$('.time-remaining').text('Time Remaining: ' + game.timer + ' Seconds');
-				game.showAnswer();
+				game.showAnswer('miss');
 			}
 			else if (game.timer == 1) {
 				$('.time-remaining').text('Time Remaining: ' + game.timer + ' Second');
@@ -116,6 +175,14 @@ $(document).ready(function() {
 			else {
 				$('.time-remaining').text('Time Remaining: ' + game.timer + ' Seconds');
 			}
+		},
+
+		endGame: function() {
+			$('.game-wrapper').hide();
+			$('.result-correct').text('Correct Answers: ' + game.numCorrect);
+			$('.result-incorrect').text('Incorrect Answers: ' + game.numWrong);
+			$('.result-unanswered').text('Unanswered: ' + game.numTimeout);
+			$('.result-wrapper').show();
 		}
 	}
 });
