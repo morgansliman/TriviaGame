@@ -12,7 +12,11 @@ $(document).ready(function() {
 	$('.button-mode').on('click', function() {
 		// ..they vanished.
 		$('.mode-list').hide();
-		game.startGame($(this).text().toLowerCase());
+
+		// grab data from data.json
+		game.getJSON($(this).text().toLowerCase());
+		// start game
+		game.playGame(true);
 	});
 
 	var game = {
@@ -21,93 +25,62 @@ $(document).ready(function() {
 		numWrong: 0,
 		numTimeout: 0,
 		answerIndex: '', 	// stores index of correct answer
-		json: false, 		// true if we already grabbed data from data.json
 		jsonQuestions: [],	// stores array of questions from data.json for selected mode
 		jsonAnswers: [],	// stores array of answers from data.json for selected mode
 
-		startGame: function(mode) {
-			// check to see if we've grabbed from data.json yet
-			if (this.json == false) {
-				// if we haven't, do it.
-				this.getJSON(mode);
-			}
-
-			// display the first question and answers and 
-			// store the correct answer's index in object property.
-			this.answerIndex = this.newQuestion(mode);
-
-			// starts the first question's timer
-			this.startCountdown();
-
-			$('.question').on('click', function() {
-				if ($(this).data('index') == game.answerIndex) {
-					clearInterval(counter);
-					game.numCorrect += 1;
-				} else {
-					clearInterval(counter);
-					game.numWrong += 1;
-				}
-				console.log('correct: ', game.numCorrect, '\n', 'wrong: ', game.numWrong);
-				game.newQuestion(mode);
-				game.startCountdown();
-			});
-		},
-
-		init: function() {
-			game.timer = 10;
-			$('.main-game').empty()
-		},
-
-		// changes game.json to true, grabs questions and answers arrays and
+		// grabs questions and answers arrays and
 		// stores them in respective object properties.
 		getJSON: function(mode) {
-			this.json = true;
 			this.jsonQuestions = jsonData[mode].questions;
 			this.jsonAnswers = jsonData[mode].answers;
 		},
 
-		newQuestion: function(mode) {
+		playGame: function(start=false) {
+			if (this.jsonQuestions.length == 0) {
+				this.endGame();
+			}
+			else {
+				// display the first question and answers and 
+				// store the correct answer's index in object property.
+				this.newQuestion();
+
+				// starts the question's timer
+				this.startCountdown();
+
+				// recursive recursion
+				$('.question').on('click', function() {
+					if ($(this).data('index') == game.answerIndex) {
+						clearInterval(counter);
+						game.numCorrect += 1;
+						game.showAnswer(true);
+					} else {
+						clearInterval(counter);
+						game.numWrong += 1;
+						game.showAnswer(false);
+					}
+
+					game.playGame();
+					console.log('correct: ', game.numCorrect, '\n', 'wrong: ', game.numWrong);
+				});
+			}
+		},
+
+		showAnswer: function(result='') {
+			
+		},
+
+		newQuestion: function() {
+			game.timer = 10;
 			// picks a random question
 			var index = Math.floor(Math.random() * game.jsonQuestions.length);
 			// stores it's answer's index
 			game.answerIndex = game.jsonAnswers[index][4];
 
-			/*
-				Creates HTML elements for the game in the (simplified) format: 
+			$('.game-wrapper').show();
 
-					<div>
-						<p>Time Remaining: X Seconds</p>
-						<p>Question from JSON</p>
-						<br>
-						<ul>
-							<li>Answer from JSON 1</li>
-							<li>Answer from JSON 2</li>
-							<li>Answer from JSON 3</li>
-							<li>Answer from JSON 4</li>
-						</ul>
-					</div>
+			$('.time-remaining').text('Time Remaining: ' + game.timer + ' Seconds');
 
-				Where 'X' represents seconds left on game.timer property &
-				Question and possible answers are retrieved from respective
-				properties using randomly generated index.
-
-				This is all appended to the .main-game div to be displayed.
-			*/
-			var div = $('<div>', {
-				'class': 'center-block game-wrapper',
-				'data-mode': mode
-			}).html(
-			'<p class="time-remaining-text">Time Remaining: \
-			<span id="time-remaining">' + game.timer + ' Seconds</span></p>' + 
-			'<p class="question-text">' + game.jsonQuestions[index] + '</p><br>' +
-			'<ul class="question-list center-block">' +
-			'<li class="question" data-index="0"></li>' +
-			'<li class="question" data-index="1"></li>' +
-			'<li class="question" data-index="2"></li>' +
-			'<li class="question" data-index="3"></li>' +
-			'</ul>'
-			);
-			$('.main-game').append(div);
+			$('.question-text').text(game.jsonQuestions[index]);
 
 			// loop through and add each possible answer into the respective
 			// list items we just created. 
@@ -128,24 +101,20 @@ $(document).ready(function() {
 
 		// decrements game.timer by 1 every second and adapts the word 'Seconds'
 		// to be grammatically correct on you're screen.
-		//
-		// TODO: if timer reaches zero before a guess is made:
-		// game.numTimeout += 1;
-		// if game.jsonQuestions.length == 0 -> end game
-		// else -> new question
 		countdown: function() {
 			game.timer -= 1;
 
 			if (game.timer == 0) {
-				// next question and/or end game code goes here
-				$('#time-remaining').text(game.timer + ' Seconds');
 				clearInterval(counter);
+				game.numTimeout += 1;
+				$('.time-remaining').text('Time Remaining: ' + game.timer + ' Seconds');
+				game.showAnswer();
 			}
 			else if (game.timer == 1) {
-				$('#time-remaining').text(game.timer + ' Second');
+				$('.time-remaining').text('Time Remaining: ' + game.timer + ' Second');
 			}
 			else {
-				$('#time-remaining').text(game.timer + ' Seconds');
+				$('.time-remaining').text('Time Remaining: ' + game.timer + ' Seconds');
 			}
 		}
 	}

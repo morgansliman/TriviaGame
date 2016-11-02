@@ -35,7 +35,10 @@
 						Start
 					</button> <!-- initially visible, hidden on click -->
 
-					<!-- game mode buttons, shown on start button click -->
+					<!-- 
+						game mode buttons, shown on start button click 
+						hidden on mode choice
+					-->
 					<div class="btn-toolbar hid center-block mode-list">
 						<div class="btn-group-vertical btn-group-justified">
 							<div class="btn-group">
@@ -53,6 +56,19 @@
 								<button type="button" class="btn button-mode btn-danger">JQuery</button>
 							</div>
 						</div>
+					</div>
+					
+					<!-- initially hidden, shown on mode choice -->
+					<div class="center-block game-wrapper hid">
+						<p class="time-remaining"></p>
+						<p class="question-text"></p>
+						<br>
+						<ul class="question-list center-block">
+							<li class="question" data-index="0"></li>
+							<li class="question" data-index="1"></li>
+							<li class="question" data-index="2"></li>
+							<li class="question" data-index="3"></li>
+						</ul>
 					</div>
 				</div>
 			</div>
