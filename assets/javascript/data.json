@@ -49,11 +49,49 @@ var jsonData = {
 
 		"css": {
 			"questions": [
-
+				"Which symbol is used to select a class?",
+				"Which symbol is used to select an ID?",
+				"How do you define a style when an element is hovered over?",
+				"How do you define a style for only the first line of an element?",
+				"What should you be thankful for on Thanksgiving?"
 			],
 
 			"answers": [
-
+				[
+					"#",
+					"?",
+					".",
+					"@",
+					2 // You know why I'm here
+				],
+				[
+					"#",
+					"?",
+					".",
+					"@",
+					0 // Something something.. correct answer
+				],
+				[
+					"element::hover {}",
+					"element.hover {}",
+					"element hover {}",
+					"element:hover {}",
+					3 //															hi.
+				],
+				[
+					"element::first-line {}",
+					"element.first-line {}",
+					"element, first-line {}",
+					"element:first-line {}",
+					0 // You're persistent, aren't you?
+				],
+				[
+					"Bootstrap",
+					"Bootstrap",
+					"Bootstrap",
+					"Bootstrap",
+					"*" // This is our little secret.
+				]
 			]
 		},
 

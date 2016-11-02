@@ -25,7 +25,11 @@ $(document).ready(function() {
 			$(this).removeClass('question');
 		});
 
-		if ($(this).data('index') == parseInt(game.jsonAnswers[game.index][4])) {
+		if (game.answerIndex == '*') {
+			game.numCorrect += 1;
+			game.showAnswer('all', parseInt($(this).data('index')));
+		}
+		else if ($(this).data('index') == parseInt(game.jsonAnswers[game.index][4])) {
 			game.numCorrect += 1;
 			game.showAnswer(true);
 		} 
@@ -89,37 +93,6 @@ $(document).ready(function() {
 			}
 		},
 
-		showAnswer: function(result) {
-			if (result == 'miss') {
-				$('.question-text').text('Out of Time!');
-				$('.result-text').text('The correct answer was: ');
-				$('.result-text').show();
-				$('.question-list').children().eq(game.answerIndex).css({
-					'background-color': 'green',
-					'color': 'white'
-				});
-			}
-			else if (result == false) {
-				$('.question-text').text('Nope!');
-				$('.result-text').text('The correct answer was: ');
-				$('.result-text').show();
-				$('.question-list').children().eq(game.answerIndex).css({
-					'background-color': 'green',
-					'color': 'white'
-				});
-			}
-			else if (result == true) {
-				$('.question-text').text('Correct!');
-				$('.question-list').children().eq(game.answerIndex).css({
-					'background-color': 'green',
-					'color': 'white'
-				});
-			}
-
-			game.answerIndex = '';
-			setTimeout(game.playGame, 3000);
-		},
-
 		newQuestion: function() {
 			game.timer = 10;
 			$('.result-text').hide();
@@ -162,6 +135,44 @@ $(document).ready(function() {
 				);
 			}
 			else {game.newQuestion();}
+		},
+
+		showAnswer: function(result, clicked='') {
+			if (result == 'miss') {
+				$('.question-text').text('Out of Time!');
+				$('.result-text').text('The correct answer was: ');
+				$('.result-text').show();
+				$('.question-list').children().eq(game.answerIndex).css({
+					'background-color': 'green',
+					'color': 'white'
+				});
+			}
+			else if (result == 'all') {
+				$('.question-text').text('Correct!');
+				$('.question-list').children().eq(clicked).css({
+					'background-color': 'green',
+					'color': 'white'
+				});
+			}
+			else if (result == false) {
+				$('.question-text').text('Nope!');
+				$('.result-text').text('The correct answer was: ');
+				$('.result-text').show();
+				$('.question-list').children().eq(game.answerIndex).css({
+					'background-color': 'green',
+					'color': 'white'
+				});
+			}
+			else if (result == true) {
+				$('.question-text').text('Correct!');
+				$('.question-list').children().eq(game.answerIndex).css({
+					'background-color': 'green',
+					'color': 'white'
+				});
+			}
+
+			game.answerIndex = '';
+			setTimeout(game.playGame, 3000);
 		},
 
 		// starts each question's countdown
