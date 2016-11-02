@@ -1,3 +1,8 @@
+@font-face {
+	font-family: 'EasterEgg';
+	src: url('../fonts/Goudy\ Old\ Style\ Regular.ttf') format('truetype');
+}
+
 body {
 	background-image: url('../images/background.png');
 	background-size: cover;
@@ -89,4 +94,9 @@ li.question:hover {
 	background-color: black;
 	color: white;
 	cursor: pointer;
+}
+
+.button-easter-egg::before {
+	content: "(monty) ";
+	font-size: 16px;
 }

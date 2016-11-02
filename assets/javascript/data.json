@@ -189,5 +189,53 @@ var jsonData = {
 					1 // the end of the file.
 				]
 			]
+		},
+
+		"python": {
+			"questions": [
+				"What is the airspeed velocity of an unladen swallow?",
+				"What is your favorite color?",
+				"What must you sacrifice to the Knights Who Say Ni?",
+				"What does your father smell of?",
+				"You have suffered a flesh wound and have no limbs left. Who wins the duel?"
+			],
+
+			"answers": [
+				[
+					"38 m/s",
+					"42 m/s",
+					"394 s/m",
+					"Well is it an African Swallow or a European Swallow?",
+					3 // jk. I saved the best for last
+				],
+				[
+					"Yellow",
+					"Blue",
+					"Red... I mean blue!",
+					"Green",
+					1 // Are you still reading these?
+				],
+				[
+					"A Goat",
+					"A Chicken",
+					"A Shrubbery",
+					"Your firstborn son",
+					2 // I don't even think you care anymore.
+				],
+				[
+					"Elderberries",
+					"Pickled Onions",
+					"Coconuts",
+					"Hamsters",
+					0 // I'm done playing your silly games.
+				],
+				[
+					"You win.",
+					"I win.",
+					"Lancelot wins.",
+					"We'll call it a draw.",
+					3 // Now go, before I taunt you a second time..
+				]
+			]
 		}
 	}

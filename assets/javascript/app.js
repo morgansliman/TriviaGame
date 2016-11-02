@@ -12,6 +12,7 @@ $(document).ready(function() {
 	$('.button-mode').on('click', function() {
 		// ..they vanished.
 		$('.mode-list').hide();
+		$('.easter-egg-wrapper').hide();
 
 		// grab data from data.json
 		game.getJSON($(this).text().toLowerCase());
@@ -67,6 +68,15 @@ $(document).ready(function() {
 
 			$('.result-wrapper').hide();
 			$('.mode-list').show();
+
+			$('body').css({
+				'background-image': '',
+				'font-family': ''
+			});
+			$('.main-content').css({
+				'background-color': ''
+			});
+			$('.title').html('Totally Useful Trivia!');
 		},
 
 		// grabs questions and answers arrays and
@@ -211,4 +221,19 @@ $(document).ready(function() {
 			$('.result-wrapper').show();
 		}
 	}
+
+	var easterEgg = new Konami(function() {
+		if ($('.mode-list').is(':visible')) {
+			$('.mode-list').hide();
+			$('.easter-egg-wrapper').show();
+			$('body').css({
+				'background-image': 'url("assets/images/holygrail.jpg")',
+				'font-family': 'EasterEgg'
+			});
+			$('.main-content').css({
+				'background-color': 'rgba(255,255,255,0.75'
+			});
+			$('.title').html('Totally <i>Useless</i> Trivia!');
+		}
+	});
 });
